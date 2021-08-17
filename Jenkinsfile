@@ -4,6 +4,12 @@ pipeline{
     tools {
         maven 'maven'
     }
+    //To retrieve value from pom.xml
+    environment{
+        ArtifactId = readMavenPom().getArtifactID()
+        Version = readMavenPom().getVersion()
+        Name = readMavenPom().getName()
+    }
 
 
     stages {
@@ -27,7 +33,28 @@ pipeline{
 
         stage('Publish to Nexus'){
             steps{
-nexusArtifactUploader artifacts: [[artifactId: 'VinayDevOpsLab', classifier: '', file: 'target/VinayDevOpsLab-0.0.4-SNAPSHOT.war', type: 'war']], credentialsId: '86517b35-9777-4f5f-a371-429238e369be', groupId: 'com.vinaysdevopslab', nexusUrl: '172.20.10.54:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'MyLabDevOps-SNAPSHOT', version: '0.0.4-SNAPSHOT'            }
+                nexusArtifactUploader artifacts:
+                [[artifactId: 'VinayDevOpsLab', 
+                classifier: '', 
+                file: 'target/VinayDevOpsLab-0.0.4-SNAPSHOT.war', 
+                type: 'war']], 
+                credentialsId: '86517b35-9777-4f5f-a371-429238e369be', 
+                groupId: 'com.vinaysdevopslab', 
+                nexusUrl: '172.20.10.54:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'MyLabDevOps-SNAPSHOT', 
+                version: '0.0.4-SNAPSHOT'            
+                }
+        }
+
+        //stage 5 : Print some additional information
+        stage('Print Environment Variables'){
+            steps{
+                echo "Artifact ID is '${ArtifactId}'"
+                echo "Version is '${Version}'"
+                echo "Name is '${Name}'"
+            }
         }
 
         //stage 4 : Deploying 

@@ -6,7 +6,7 @@ pipeline{
     }
     //To retrieve value from pom.xml
     environment{
-        ArtifactId = readMavenPom().getArtifactID()
+        ArtifactId = readMavenPom().getArtifactId()
         Version = readMavenPom().getVersion()
         Name = readMavenPom().getName()
     }

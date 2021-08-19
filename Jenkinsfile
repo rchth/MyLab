@@ -28,7 +28,7 @@ pipeline{
             steps{
                 echo 'Testing source code statically via publishing to Sonarqube'
                 withSonarQubeEnv('sonarqube')  { // You can override the credential to be used
-                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                sh 'mvn sonar:sonar'
                 }
             }
         }
@@ -96,7 +96,7 @@ pipeline{
             }
         }
 
-        stage('Deploy to Docker'){
+        /* stage('Deploy to Docker'){
             steps{
                 echo 'deploying'
                 sshPublisher(publishers: 
@@ -122,7 +122,7 @@ pipeline{
                     verbose: false)
                     ])
             }
-        }
+        }*/
 
 
 

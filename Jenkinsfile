@@ -23,10 +23,13 @@ pipeline{
             }
         }
 
-        //stage 2 Testing
-        stage ('Test'){
+        //stage 2 Testing with Sonarqube Scanner
+        stage ('Sonarqube Analysis'){
             steps{
-                echo 'Testing'
+                echo 'Testing source code statically via publishing to Sonarqube'
+                withSonarQubeEnv('sonarqube')  { // You can override the credential to be used
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                }
             }
         }
 
